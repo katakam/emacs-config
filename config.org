@@ -594,7 +594,12 @@ Now all that's needed is a template to be used.
 ;;
 ;; Copyright (C) %Y TEC
 ;;
+<<<<<<< Updated upstream
 ;; Author: TEC <https://code.tecosaur.net/tec>
+=======
+;; Author: TEC <https://git.tecosaur.net/tec>
+n
+>>>>>>> Stashed changes
 ;; Maintainer: TEC <contact@tecosaur.net>
 ;; Created: %B %d, %Y
 ;; Modified: %B %d, %Y
@@ -1328,8 +1333,8 @@ the start of the tangle process. This is done by calling =bootstrap= within the
 
 It's useful to have some basic personal information
 #+begin_src emacs-lisp
-(setq user-full-name "TEC"
-      user-mail-address "contact@tecosaur.net")
+(setq user-full-name "VK"
+      user-mail-address "vinodk.katakam@gmail.com")
 #+end_src
 Apparently this is used by ~GPG~, and all sorts of other things.
 
@@ -1728,6 +1733,7 @@ upload                       ; map local to remote projects via ssh/ftp
 
 #+name: doom-os
 #+begin_src emacs-lisp
+macos
 tty                          ; improve the terminal Emacs experience
 #+end_src
 
@@ -1792,7 +1798,7 @@ nix                          ; I hereby declare "nix geht mehr!"
  +present                    ; using org-mode for presentations
  +roam2)                     ; wander around notes
 ;;php                        ; perl's insecure younger brother
-;;plantuml                   ; diagrams for confusing people more
+plantuml                   ; diagrams for confusing people more
 ;;purescript                 ; javascript, but functional
 (python +lsp +pyright)       ; beautiful is better than ugly
 ;;qt                         ; the 'cutest' gui framework ever
@@ -1881,6 +1887,14 @@ near-minimal new config:
 #+end_src
 
 *** Visual Settings
+**** Transparancy
+
+#+BEGIN_SRC emacs-lisp
+;; let yabai work
+(menu-bar-mode t)
+(set-frame-parameter (selected-frame) 'alpha '(90 . 90)) (add-to-list 'default-frame-alist '(alpha . (90 . 90)))
+#+END_SRC
+
 **** Font Face
 ***** Setting fonts
 
@@ -1890,10 +1904,17 @@ trying out JetBrains Mono though. So far I have mixed feelings on it, some
 aspects are nice, but on others I prefer Fira.
 
 #+begin_src emacs-lisp
+<<<<<<< Updated upstream
 (setq doom-font (font-spec :family "JetBrains Mono" :size 24)
       doom-big-font (font-spec :family "JetBrains Mono" :size 36)
       doom-variable-pitch-font (font-spec :family "Overpass" :size 26)
       doom-symbol-font (font-spec :family "JuliaMono")
+=======
+(setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16)
+      doom-big-font (font-spec :family "Hack Nerd Font Mono" :size 18)
+      doom-variable-pitch-font (font-spec :family "Overpass" :size 19)
+      doom-unicode-font (font-spec :family "JuliaMono")
+>>>>>>> Stashed changes
       doom-emoji-font (font-spec :family "Twitter Color Emoji") ; Just used by me
       doom-serif-font (font-spec :family "IBM Plex Mono" :size 22 :weight 'light))
 #+end_src
@@ -2074,8 +2095,8 @@ is a Gnome CLI tool but often present on KDE systems for GTK support.
 
 #+name: default-theme
 #+begin_src emacs-lisp :noweb-ref none
-(let ((light-theme 'doom-tomorrow-day)
-      (dark-theme 'doom-vibrant)
+(let ((light-theme 'doom-nord-light)
+      (dark-theme 'doom-nord)
       (system-light-p
        (and
         (executable-find "gdbus")
@@ -2438,10 +2459,7 @@ transparent overlay).
            colours))
          (colour-menu-template
           (format
-           "Colour %%s is unexpected! Should this be one of the following?\n
-%s
- %s to ignore
- %s to quit"
+           "Colour %%s is unexpected! Should this be one of the following?\n %s %s to ignore %s to quit"
            (mapconcat
             #'cddr
             colour-menu-entries
@@ -4040,7 +4058,46 @@ From the =:completion corfu= module.
 I like completion, but I don't like to feel spammed by it, so let's up the delay.
 
 #+begin_src emacs-lisp
+<<<<<<< Updated upstream
 (setq corfu-auto-delay 0.5)
+=======
+(after! company
+  (setq company-idle-delay 0.5
+        company-minimum-prefix-length 2)
+  (setq company-show-numbers t)
+  ;;(add-hook 'evil-normal-state-entry-hook #'company-abort)
+      );; make aborting less annoying.
+#+end_src
+
+Now, the improvements from ~precedent~ are mostly from remembering history, so
+let's improve that memory.
+
+#+begin_src emacs-lisp
+(setq-default history-length 1000)
+(setq-default prescient-history-length 1000)
+#+end_src
+
+**** Plain Text
+
+~Ispell~ is nice, let's have it in ~text~, ~markdown~, and ~GFM~.
+#+begin_src emacs-lisp
+(set-company-backend!
+  '(text-mode
+    markdown-mode
+    gfm-mode)
+  '(:seperate
+    company-ispell
+    company-files
+    company-yasnippet))
+#+end_src
+We then configure the dictionary we're using in [[*Ispell][Ispell]].
+
+**** ESS
+
+~company-dabbrev-code~ is nice. Let's have it.
+#+begin_src emacs-lisp
+(set-company-backend! 'ess-r-mode '(company-R-args company-R-objects company-dabbrev-code :separate))
+>>>>>>> Stashed changes
 #+end_src
 
 *** Projectile
@@ -5608,7 +5665,11 @@ something through Emacs?
 (use-package! calibredb
   :commands calibredb
   :config
+<<<<<<< Updated upstream
   (setq calibredb-root-dir "~/.local/share/calibre-library"
+=======
+  (setq calibredb-root-dir "~/Desktop/VK/Other/Ebooks"
+>>>>>>> Stashed changes
         calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
   (map! :map calibredb-show-mode-map
         :ne "?" #'calibredb-entry-dispatch
@@ -8585,7 +8646,7 @@ set up org-capture.
 
   (setq doct-after-conversion-functions '(+doct-iconify-capture-templates))
 
-  (defvar +org-capture-recipies  "~/Desktop/TEC/Organisation/recipies.org")
+  (defvar +org-capture-recipies  "~/Desktop/VK/Organisation/recipies.org")
 
   (defun set-org-capture-templates ()
     (setq org-capture-templates
@@ -8632,7 +8693,7 @@ set up org-capture.
                                :desc ""
                                :i-type "read:reaserch")
                               ("\tRecipie" :keys "r"
-                               :icon ("nf-fa-spoon" :set "faicon" :color "dorange")
+                               :icon ("nf-fa-spoon" :set "faicon" :color "dorange"      )
                                :file +org-capture-recipies
                                :headline "Unsorted"
                                :template "%(org-chef-get-recipe-from-url)")
@@ -8851,14 +8912,14 @@ I'll just set this to be within =Organisation= folder for now, in the future it
 could be worth seeing if I could hook this up to a [[https://nextcloud.com/][Nextcloud]] instance.
 
 #+begin_src emacs-lisp
-(setq org-roam-directory "~/Desktop/TEC/Organisation/Roam/")
+(setq org-roam-directory "~/Desktop/VK/Organisation/Roam/")
 #+end_src
 
 That said, if the directory doesn't exist we likely don't want to be using roam.
 Since we don't want to trigger errors (which will happen as soon as roam tries
 to initialise), let's not load roam.
 
-#+begin_src emacs-lisp :noweb-ref none :tangle (if (file-exists-p "~/Desktop/TEC/Organisation/Roam/") "no" "packages.el")
+#+begin_src emacs-lisp :noweb-ref none :tangle (if (file-exists-p "~/Desktop/VK/Organisation/Roam/") "no" "packages.el")
 (package! org-roam :disable t)
 #+end_src
 
@@ -12566,51 +12627,51 @@ Now, there are some symbols that aren't included in =inputenc=, but we should be
 able to handle anyway. For them we define a table of LaTeX translations
 
 #+name: latex-non-ascii-char-substitutions
-| Character | LaTeX |
-|-----------+-------|
-| ɑ         | \(\alpha\) |
-| β         | \(\beta\) |
-| γ         | \(\gamma\) |
-| δ         | \(\delta\) |
-| ε         | \(\epsilon\) |
-| ϵ         | \(\varepsilon\) |
-| ζ         | \(\zeta\) |
-| η         | \(\eta\) |
-| θ         | \(\theta\) |
-| ϑ         | \(\vartheta\) |
-| ι         | \(\iota\) |
-| κ         | \(\kappa\) |
-| λ         | \(\lambda\) |
-| μ         | \(\mu\) |
-| ν         | \(\nu\) |
-| ξ         | \(\xi\) |
-| π         | \(\pi\) |
-| ϖ         | \(\varpi\) |
-| ρ         | \(\rho\) |
-| ϱ         | \(\varrho\) |
-| σ         | \(\sigma\) |
-| ς         | \(\varsigma\) |
-| τ         | \(\tau\) |
-| υ         | \(\upsilon\) |
+| Character | LaTeX  |
+|-----------+--------|
+| ɑ         | \(\alpha\)  |
+| β         | \(\beta\)  |
+| γ         | \(\gamma\)  |
+| δ         | \(\delta\)  |
+| ε         | \(\epsilon\)  |
+| ϵ         | \(\varepsilon\)  |
+| ζ         | \(\zeta\)  |
+| η         | \(\eta\)  |
+| θ         | \(\theta\)  |
+| ϑ         | \(\vartheta\)  |
+| ι         | \(\iota\)  |
+| κ         | \(\kappa\)  |
+| λ         | \(\lambda\)  |
+| μ         | \(\mu\)  |
+| ν         | \(\nu\)  |
+| ξ         | \(\xi\)  |
+| π         | \(\pi\)  |
+| ϖ         | \(\varpi\)  |
+| ρ         | \(\rho\)  |
+| ϱ         | \(\varrho\)  |
+| σ         | \(\sigma\)  |
+| ς         | \(\varsigma\)  |
+| τ         | \(\tau\)  |
+| υ         | \(\upsilon\)  |
 | ϕ         | \(\phi\) |
-| φ         | \(\varphi\) |
-| ψ         | \(\psi\) |
-| ω         | \(\omega\) |
-| Γ         | \(\Gamma\) |
-| Δ         | \(\Delta\) |
-| Θ         | \(\Theta\) |
-| Λ         | \(\Lambda\) |
-| Ξ         | \(\Xi\) |
-| Π         | \(\Pi\) |
-| Σ         | \(\Sigma\) |
-| Υ         | \(\Upsilon\) |
-| Φ         | \(\Phi\) |
-| Ψ         | \(\Psi\) |
-| Ω         | \(\Omega\) |
-| א         | \(\aleph\) |
-| ב         | \(\beth\) |
-| ד         | \(\daleth\) |
-| ג         | \(\gimel\) |
+| φ         | \(\varphi\)  |
+| ψ         | \(\psi\)  |
+| ω         | \(\omega\)  |
+| Γ         | \(\Gamma\)  |
+| Δ         | \(\Delta\)  |
+| Θ         | \(\Theta\)  |
+| Λ         | \(\Lambda\)  |
+| Ξ         | \(\Xi\)  |
+| Π         | \(\Pi\)  |
+| Σ         | \(\Sigma\)  |
+| Υ         | \(\Upsilon\)  |
+| Φ         | \(\Phi\)  |
+| Ψ         | \(\Psi\)  |
+| Ω         | \(\Omega\)  |
+| א         | \(\aleph\)  |
+| ב         | \(\beth\)  |
+| ד         | \(\daleth\)  |
+| ג         | \(\gimel\)  |
 
 #+name: gen-latex-non-ascii-char-substitutions
 #+begin_src emacs-lisp :noweb-ref none :var latex-non-ascii-char-substitutions=latex-non-ascii-char-substitutions
@@ -13569,6 +13630,11 @@ In case of Emacs28:
   (add-hook 'latex-mode-hook #'TeX-latex-mode))
 #+end_src
 
+** Plantuml
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq plantuml-jar-path "/Users/vkatakam/.local/bin/plantuml.jar")
+    (setq plantuml-default-exec-mode 'jar))
+#+end_src
 ** Python
 
 Since I'm using =mypyls=, as suggested in [[file:~/.config/emacs/modules/lang/python/README.org::*Language Server Protocol Support][:lang python LSP support]] I'll tweak the
@@ -13578,7 +13644,58 @@ priority of =mypyls=
 (after! lsp-python-ms
   (set-lsp-priority! 'mspyls 1))
 #+end_src
+#+BEGIN_SRC emacs-lisp :tangle config.el
+(add-to-list 'exec-path "/Users/vkatakam/anaconda3/bin/python3")
+(setq +python-ipython-repl-args '("-i" "--simple-prompt" "--no-color-info"))
 
+;;;Juypyter Config
+(after! python (setq ob-async-no-async-languages-alist '("jupyter-python")))
+
+(use-package jupyter
+  :defer t
+  :init
+  (setq
+       python-shell-interpreter "jupyter"
+       python-shell-interpreter-args "console --simple-prompt"
+       org-babel-python-command "/Users/vkatakam/anaconda3/bin/python3"
+   ))
+
+(setq org-babel-default-header-args:jupyter-python '(  (:async . "yes")
+                                                       (:session . "python3")
+                                                       (:kernel ."python3")
+                                                       ))
+#+END_SRC
+** Leetcode
+*** Install my_cookies with pip install my_cookies
+add extra headers to leetcode.el (host to leetcode)
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! leetcode :recipe (:host github :repo "kaiwk/leetcode.el"))
+#+end_src
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(custom-set-variables '(package-selected-packages
+                        '(ranger leetcode ejc-sql ))
+                      )
+(after! leetcode
+(setq leetcode-prefer-language "python3"
+      leetcode-prefer-sql "mysql"
+      leetcode-save-solutions t
+      leetcode-directory "/Users/vkatakam/learning/lc"
+      )
+)
+#+END_SRC
+***
+** Spring Boot
+
+#+begin_src emacs-lisp
+(use-package! lsp-java-boot
+  :after lsp-mode
+  :preface
+  (add-hook! 'conf-javaprop-mode-hook #'lsp)
+  (add-hook! 'lsp-mode-hook #'lsp-lens-mode)
+  (add-hook! 'java-mode-hook #'lsp-java-boot-lens-mode))
+#+end_src
 ** PDF
 *** MuPDF
 
