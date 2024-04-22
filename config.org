@@ -1,5 +1,6 @@
 # SPDX-FileCopyrightText: © 2020-2022 tecosaur <contact@tecosaur.net>
 # SPDX-License-Identifier: MIT
+#
 #+title: Doom Emacs Configuration
 #+subtitle: The Methods, Management, and Menagerie@@latex:\\@@ of Madness@@latex: --- in meticulous detail@@
 #+author: tecosaur
@@ -594,12 +595,7 @@ Now all that's needed is a template to be used.
 ;;
 ;; Copyright (C) %Y TEC
 ;;
-<<<<<<< Updated upstream
 ;; Author: TEC <https://code.tecosaur.net/tec>
-=======
-;; Author: TEC <https://git.tecosaur.net/tec>
-n
->>>>>>> Stashed changes
 ;; Maintainer: TEC <contact@tecosaur.net>
 ;; Created: %B %d, %Y
 ;; Modified: %B %d, %Y
@@ -1333,7 +1329,7 @@ the start of the tangle process. This is done by calling =bootstrap= within the
 
 It's useful to have some basic personal information
 #+begin_src emacs-lisp
-(setq user-full-name "VK"
+(setq user-full-name "katakam"
       user-mail-address "vinodk.katakam@gmail.com")
 #+end_src
 Apparently this is used by ~GPG~, and all sorts of other things.
@@ -1733,8 +1729,8 @@ upload                       ; map local to remote projects via ssh/ftp
 
 #+name: doom-os
 #+begin_src emacs-lisp
-macos
 tty                          ; improve the terminal Emacs experience
+macos
 #+end_src
 
 **** Language support
@@ -1888,13 +1884,11 @@ near-minimal new config:
 
 *** Visual Settings
 **** Transparancy
-
 #+BEGIN_SRC emacs-lisp
 ;; let yabai work
 (menu-bar-mode t)
 (set-frame-parameter (selected-frame) 'alpha '(90 . 90)) (add-to-list 'default-frame-alist '(alpha . (90 . 90)))
 #+END_SRC
-
 **** Font Face
 ***** Setting fonts
 
@@ -1904,19 +1898,13 @@ trying out JetBrains Mono though. So far I have mixed feelings on it, some
 aspects are nice, but on others I prefer Fira.
 
 #+begin_src emacs-lisp
-<<<<<<< Updated upstream
-(setq doom-font (font-spec :family "JetBrains Mono" :size 24)
-      doom-big-font (font-spec :family "JetBrains Mono" :size 36)
-      doom-variable-pitch-font (font-spec :family "Overpass" :size 26)
-      doom-symbol-font (font-spec :family "JuliaMono")
-=======
-(setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 16)
+(setq doom-font (font-spec :family "Hack Nerd Font Mono" :size 18)
       doom-big-font (font-spec :family "Hack Nerd Font Mono" :size 18)
       doom-variable-pitch-font (font-spec :family "Overpass" :size 19)
-      doom-unicode-font (font-spec :family "JuliaMono")
->>>>>>> Stashed changes
-      doom-emoji-font (font-spec :family "Twitter Color Emoji") ; Just used by me
-      doom-serif-font (font-spec :family "IBM Plex Mono" :size 22 :weight 'light))
+     doom-unicode-font (font-spec :family "JuliaMono")
+     doom-emoji-font (font-spec :family "Twitter Color Emoji") ; Just used by me
+     doom-serif-font (font-spec :family "IBM Plex Mono" :size 22 :weight
+'light))
 #+end_src
 
 #+attr_html: :class invertible :alt Screenshot of the fonts within Emacs.
@@ -2459,7 +2447,10 @@ transparent overlay).
            colours))
          (colour-menu-template
           (format
-           "Colour %%s is unexpected! Should this be one of the following?\n %s %s to ignore %s to quit"
+           "Colour %%s is unexpected! Should this be one of the following?\n
+%s
+ %s to ignore
+ %s to quit"
            (mapconcat
             #'cddr
             colour-menu-entries
@@ -4058,46 +4049,7 @@ From the =:completion corfu= module.
 I like completion, but I don't like to feel spammed by it, so let's up the delay.
 
 #+begin_src emacs-lisp
-<<<<<<< Updated upstream
 (setq corfu-auto-delay 0.5)
-=======
-(after! company
-  (setq company-idle-delay 0.5
-        company-minimum-prefix-length 2)
-  (setq company-show-numbers t)
-  ;;(add-hook 'evil-normal-state-entry-hook #'company-abort)
-      );; make aborting less annoying.
-#+end_src
-
-Now, the improvements from ~precedent~ are mostly from remembering history, so
-let's improve that memory.
-
-#+begin_src emacs-lisp
-(setq-default history-length 1000)
-(setq-default prescient-history-length 1000)
-#+end_src
-
-**** Plain Text
-
-~Ispell~ is nice, let's have it in ~text~, ~markdown~, and ~GFM~.
-#+begin_src emacs-lisp
-(set-company-backend!
-  '(text-mode
-    markdown-mode
-    gfm-mode)
-  '(:seperate
-    company-ispell
-    company-files
-    company-yasnippet))
-#+end_src
-We then configure the dictionary we're using in [[*Ispell][Ispell]].
-
-**** ESS
-
-~company-dabbrev-code~ is nice. Let's have it.
-#+begin_src emacs-lisp
-(set-company-backend! 'ess-r-mode '(company-R-args company-R-objects company-dabbrev-code :separate))
->>>>>>> Stashed changes
 #+end_src
 
 *** Projectile
@@ -5665,11 +5617,7 @@ something through Emacs?
 (use-package! calibredb
   :commands calibredb
   :config
-<<<<<<< Updated upstream
-  (setq calibredb-root-dir "~/.local/share/calibre-library"
-=======
   (setq calibredb-root-dir "~/Desktop/VK/Other/Ebooks"
->>>>>>> Stashed changes
         calibredb-db-dir (expand-file-name "metadata.db" calibredb-root-dir))
   (map! :map calibredb-show-mode-map
         :ne "?" #'calibredb-entry-dispatch
@@ -5693,7 +5641,7 @@ something through Emacs?
         :ne "a" #'calibredb-add
         :ne "A" #'calibredb-add-dir
         :ne "c" #'calibredb-clone
-        :ne "d" #'calibredb-remove
+        :ne "d" #'calibredb-removDeske
         :ne "D" #'calibredb-remove-marked-items
         :ne "j" #'calibredb-next-entry
         :ne "k" #'calibredb-previous-entry
@@ -8693,7 +8641,7 @@ set up org-capture.
                                :desc ""
                                :i-type "read:reaserch")
                               ("\tRecipie" :keys "r"
-                               :icon ("nf-fa-spoon" :set "faicon" :color "dorange"      )
+                               :icon ("nf-fa-spoon" :set "faicon" :color "dorange")
                                :file +org-capture-recipies
                                :headline "Unsorted"
                                :template "%(org-chef-get-recipe-from-url)")
@@ -10932,7 +10880,7 @@ are part of my LaTeX preamble.
       displayIndent: '%INDENT'
     },
     output: {
-      font: '%FONT',
+      font: '%FONT',                    ;
       displayOverflow: '%OVERFLOW'
     }
   };
@@ -12668,7 +12616,7 @@ able to handle anyway. For them we define a table of LaTeX translations
 | Φ         | \(\Phi\)  |
 | Ψ         | \(\Psi\)  |
 | Ω         | \(\Omega\)  |
-| א         | \(\aleph\)  |
+| א        | \(\aleph\)  |
 | ב         | \(\beth\)  |
 | ד         | \(\daleth\)  |
 | ג         | \(\gimel\)  |
@@ -13629,27 +13577,43 @@ In case of Emacs28:
 (when (>= emacs-major-version 28)
   (add-hook 'latex-mode-hook #'TeX-latex-mode))
 #+end_src
-
 ** Plantuml
-#+BEGIN_SRC emacs-lisp :tangle yes
-(setq plantuml-jar-path "/Users/vkatakam/.local/bin/plantuml.jar")
-    (setq plantuml-default-exec-mode 'jar))
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+(org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
+#+end_src
+** Mermaid
+#+BEGIN_SRC emacs-lisp :tangle packages.el
+(package! ob-mermaid)
+(setq ob-mermaid-cli-path "/usr/local/bin/mmdc")
+
 #+end_src
 ** Python
 
-Since I'm using =mypyls=, as suggested in [[file:~/.config/emacs/modules/lang/python/README.org::*Language Server Protocol Support][:lang python LSP support]] I'll tweak the
+       Since I'm using =mypyls=, as suggested in [[file:~/.config/emacs/modules/lang/python/README.org::*Language Server Protocol Support][:lang python LSP support]] I'll tweak the
 priority of =mypyls=
+#+BEGIN_SRC emacs-lisp :tangle packages.el
+(package! conda)
+#+END_SRC
 
 #+begin_src emacs-lisp
 (after! lsp-python-ms
   (set-lsp-priority! 'mspyls 1))
 #+end_src
-#+BEGIN_SRC emacs-lisp :tangle config.el
+
+#+BEGIN_SRC emacs-lisp
 (add-to-list 'exec-path "/Users/vkatakam/anaconda3/bin/python3")
 (setq +python-ipython-repl-args '("-i" "--simple-prompt" "--no-color-info"))
 
-;;;Juypyter Config
-(after! python (setq ob-async-no-async-languages-alist '("jupyter-python")))
+
+(use-package conda
+  :config
+  (setq conda-anaconda-home (expand-file-name "/Users/vkatakam/anaconda3/"))
+  (setq conda-env-home-directory (expand-file-name "/Users/vkatakam/anaconda3/"))
+  (setq conda-env-subdirectory "envs"))
+(setq python-shell-completion-native-enable . f)
+(unless (getenv "CONDA_DEFAULT_ENV")
+  (conda-env-activate "base"))
 
 (use-package jupyter
   :defer t
@@ -13659,6 +13623,20 @@ priority of =mypyls=
        python-shell-interpreter-args "console --simple-prompt"
        org-babel-python-command "/Users/vkatakam/anaconda3/bin/python3"
    ))
+
+(advice-remove 'org-babel-do-load-languages)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t) ;; Other languages
+   (shell . t)
+   ;; Python & Jupyter
+   (python . t)
+   (jupyter . t)))
+
+;;;Juypyter Config
+(setq ob-async-no-async-languages-alist '("python" "jupyter-python"))
+
 
 (setq org-babel-default-header-args:jupyter-python '(  (:async . "yes")
                                                        (:session . "python3")
@@ -13696,6 +13674,7 @@ add extra headers to leetcode.el (host to leetcode)
   (add-hook! 'lsp-mode-hook #'lsp-lens-mode)
   (add-hook! 'java-mode-hook #'lsp-java-boot-lens-mode))
 #+end_src
+
 ** PDF
 *** MuPDF
 
